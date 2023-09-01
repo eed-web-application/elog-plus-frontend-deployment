@@ -8,7 +8,7 @@ env:
 
 jobs:
   create-image:
-    runs-on: ubbuntu-latest
+    runs-on: ubuntu-latest
 
     outputs:
       IMAGE_TO_DEPLOY: ${{ steps.meta.outputs.tags }}
