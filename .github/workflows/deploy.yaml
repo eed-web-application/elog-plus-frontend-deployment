@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  IMAGE: ${{ inputs.deployment_image }}
+  IMAGE: ${{ inputs.image }}
 
 jobs:
   deploy-staging:
