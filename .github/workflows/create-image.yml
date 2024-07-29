@@ -54,7 +54,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-image
     steps:
-      - run: |
-          gh workflow --repo eed-web-application/elog-plus-frontend-deployment run Deploy -f image="${{needs.create-image.outputs.IMAGE_TO_DEPLOY}}"
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          gh workflow --repo eed-web-application/elog-plus-frontend-deployment run Deploy -f image="${{needs.create-image.outputs.IMAGE_TO_DEPLOY}}"
